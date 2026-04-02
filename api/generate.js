@@ -1,10 +1,10 @@
-const Anthropic = require("@anthropic-ai/sdk").default;
+import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -29,6 +29,6 @@ Be warm, non-judgmental and encouraging. Return only the prompt, no introduction
     res.status(200).json({ prompt });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to generate prompt" });
+    res.status(500).json({ error: error.message });
   }
-};
+}
